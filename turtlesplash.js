@@ -14,7 +14,10 @@ function setup() {
 
     var particleContainer = new PIXI.Container();
 
-    var splash = function (x, y) {
+    var splash = function (e) {
+
+        var x = e.clientX;
+        var y = e.clientY;
 
         var emitter = new PIXI.particles.Emitter(particleContainer, "turtle.png", {
 
@@ -71,10 +74,7 @@ function setup() {
 
     app.stage.addChild(particleContainer);
 
-    document.body.onclick = function (e) {
-
-        splash(e.clientX, e.clientY)
-
-    }
+    document.body.addEventListener("mouseup", splash, false);
+    document.body.addEventListener("touchend", splash, false);
 
 }
