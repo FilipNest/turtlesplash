@@ -14,10 +14,7 @@ function setup() {
 
     var particleContainer = new PIXI.Container();
 
-    var splash = function (e) {
-
-        var x = e.clientX;
-        var y = e.clientY;
+    var splash = function (x, y) {
 
         var emitter = new PIXI.particles.Emitter(particleContainer, "turtle.png", {
 
@@ -74,7 +71,18 @@ function setup() {
 
     app.stage.addChild(particleContainer);
 
-    document.body.addEventListener("mouseup", splash, false);
-    document.body.addEventListener("touchend", splash, false);
+    app.stage.hitArea = new PIXI.Rectangle(0, 0, window.innerWidth, window.innerHeight);
+
+    app.stage.interactive = true;
+
+    let click = function (event) {
+
+        let clickLocation = event.data.getLocalPosition(app.stage);
+
+        splash(clickLocation.x, clickLocation.y);
+    }
+
+    app.stage.on("mousedown", click);
+    app.stage.on("touchstart", click);
 
 }
